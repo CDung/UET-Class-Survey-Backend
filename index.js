@@ -1,18 +1,20 @@
-var mysql = require('mysql');
-
-var con = mysql.createConnection({
-  host: "db4free.net",
-  user: "dungntc108",
-  password: "12345678",
-  database: "class_survey"
+var express=require("express");
+var app=express();
+var server=require("http").createServer(app);
+server.listen(process.env.PORT||1000);
+app.get("/",function (req,res) {
+    res.sendFile(__dirname+"/index.html");
 });
-
-con.connect(function(err) {
-  if (err) throw err;
-  var inp='id';
-  var sql = "SELECT * FROM `resulft`";
-  con.query(sql,inp, function (err, rows,fields) {
-    if (err) throw err;
-    // console.log(rows);
-  });
+app.get("/index.html",function (req,res) {
+    res.sendFile(__dirname+"/index.html");
 });
+app.get("/index.html/",function (req,res) {
+    res.sendFile(__dirname+"/index.html");
+});
+app.get("*",function (req,res) {
+  if (req.url.endsWith(".jpg")) {
+    res.sendFile(__dirname+req.url);
+  }else{
+    res.send("not found");
+  }
+})
