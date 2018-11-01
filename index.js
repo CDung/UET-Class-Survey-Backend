@@ -1,7 +1,7 @@
 var mysql = require('mysql');
 
 var con = mysql.createConnection({
-  host: "https://www.db4free.net",
+  host: "db4free.net",
   user: "dungntc108",
   password: "12345678",
   database: "class_survey"
