@@ -4,6 +4,8 @@
   "description": "",
   "main": "myfirst.js",
   "dependencies": {
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
     "knex": "^0.15.2",
     "mysql": "^2.16.0"
   },

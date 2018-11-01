@@ -1,6 +1,8 @@
-var http = require('http');
-
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.end('Hello World!');
-}).listen(process.env.PORT||8080);
+var express=require("express")
+var app=express();
+app.set("view engine","ejs");
+app.set("views","./views");
+app.listen(process.env.PORT ||3000);
+app.get("/",function(req,res){
+	res.render("home");
+});
