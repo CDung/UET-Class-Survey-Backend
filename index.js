@@ -13,6 +13,6 @@ con.connect(function(err) {
   var sql = "SELECT * FROM `resulft`";
   con.query(sql,inp, function (err, rows,fields) {
     if (err) throw err;
-    console.log(rows);
+    // console.log(rows);
   });
 });
