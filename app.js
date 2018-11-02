@@ -24,10 +24,29 @@ app.get('*', function(req, res){
 		});
 		conn.connect();
 		var q = url.parse(req.url, true).query;
+		var a=q.action;
+		var si=q.student_id;
   		var li=q.lecturer_id;
   		var ci=q.course_id;
-		var sql = "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id";     
-    	conn.query(sql,[li,ci], function(error, rows, fields){
+		var sql ;
+		var input;
+		if (a==="get_resulft"){
+			sql= "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id"; 
+			input=[li,ci];
+		}
+		if (a==="lecture_get_courses"){
+			sql= "SELECT `course_id`,`subject` FROM `coursesoflecturers` where lecturer_id=?"; 
+			input=[li];
+		}
+		if (a==="student_get_courses"){
+			sql= "SELECT `done`,`course_id`,`subject`,GROUP_CONCAT(`lecture_name` SEPARATOR ', ') as 'lectures' FROM `coursesofstudent` WHERE `student_id`=? GROUP BY course_id,student_id"; 
+			input=[si];
+		}	
+		if (a==="get_survey_form"){
+			sql="SELECT * FROM `surveyform`";
+			input=[]
+		}	    
+    	conn.query(sql,input, function(error, rows, fields){
         	if ( error ){
         	    res.status(400).send('Error in database operation');
         	} else 
