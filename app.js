@@ -34,7 +34,7 @@ app.get('*', function(req, res){
 			sql= "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id"; 
 			input=[li,ci];
 		}
-		if (a==="lecture_get_courses"){
+		if (a==="lecturer_get_courses"){
 			sql= "SELECT `course_id`,`subject` FROM `coursesoflecturers` where lecturer_id=?"; 
 			input=[li];
 		}
