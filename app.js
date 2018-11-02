@@ -24,9 +24,10 @@ app.get('*', function(req, res){
 		});
 		conn.connect();
 		var q = url.parse(req.url, true).query;
-  		var i=q.id;
-		var sql = "SELECT * FROM `resulft` where lecturer_id=? ";     
-    	conn.query(sql,i, function(error, rows, fields){
+  		var li=q.lecturer_id;
+  		var ci=q.course_id;
+		var sql = "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id";     
+    	conn.query(sql,[li,ci], function(error, rows, fields){
         	if ( error ){
         	    res.status(400).send('Error in database operation');
         	} else 
