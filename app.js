@@ -25,22 +25,21 @@ app.get('*', function(req, res){
 		conn.connect();
 		var q = url.parse(req.url, true).query;
 		var a=q.action;
-		var si=q.student_id;
-  		var li=q.lecturer_id;
+		var i=q.id;
   		var ci=q.course_id;
 		var sql ;
 		var input;
 		if (a==="get_resulft"){
 			sql= "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id"; 
-			input=[li,ci];
+			input=[i,ci];
 		}
 		if (a==="lecturer_get_courses"){
 			sql= "SELECT `course_id`,`subject` FROM `coursesoflecturers` where lecturer_id=?"; 
-			input=[li];
+			input=[i];
 		}
 		if (a==="student_get_courses"){
 			sql= "SELECT `done`,`course_id`,`subject`,GROUP_CONCAT(`lecture_name` SEPARATOR ', ') as 'lectures' FROM `coursesofstudent` WHERE `student_id`=? GROUP BY course_id,student_id"; 
-			input=[si];
+			input=[i];
 		}	
 		if (a==="get_survey_form"){
 			sql="SELECT * FROM `surveyform`";
