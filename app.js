@@ -1,65 +1,27 @@
-var mysql = require('mysql');
-var express = require('express');
-var url=require('url');
-var fs=require("fs");
-var app = express();
+const express = require('express');
+const app = express();
+const sercure=require('./control/sercure');
+const userController=require('./control/user');
+const jsonParser = require('body-parser').json();
+const cookieParser = require('cookie-parser')
+
+app.use(jsonParser);
+app.use((req, res, next) => {   
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type,X-Requested-With,Authorization');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    next();
+}); 
+app.use(express.static('data'));
+app.use(cookieParser());  
+app.listen(process.env.PORT ||3000);
 
 
-app.get('*', function(req, res){
-	if(req.url===""||req.url==="/"||req.url==="/index.html"||req.url==="/index.html/"||req.url==="/index"){
-		var dataIndex=fs.readFileSync(__dirname+"/index.html","utf-8");
-		res.send(dataIndex);
-		return;
-	}		
-    if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
-    	res.sendFile(__dirname+req.url);
-    	return;
-  	}
-  	else{
-		var conn = mysql.createConnection({   
-  			host: "db4free.net",
-  			user: "dungntc108",
-  			password: "12345678",
-  			database: "class_survey"
-		});
-		conn.connect();
-		var q = url.parse(req.url, true).query;
-		var a=q.action;
-		var i=q.id;
-  		var ci=q.course_id;
-		var sql ;
-		var input;
-		if (a==="get_resulft"){
-			sql= "SELECT criteria,M,M1,M2 FROM `resulft` where lecturer_id=? && course_id=? order by criteria_id"; 
-			input=[i,ci];
-		}
-		if (a==="lecturer_get_courses"){
-			sql= "SELECT `course_id`,`subject` FROM `coursesoflecturers` where lecturer_id=?"; 
-			input=[i];
-		}
-		if (a==="student_get_courses"){
-			sql= "SELECT `done`,`course_id`,`subject`,GROUP_CONCAT(`lecture_name` SEPARATOR ', ') as 'lectures' FROM `coursesofstudent` WHERE `student_id`=? GROUP BY course_id,student_id"; 
-			input=[i];
-		}	
-		if (a==="get_survey_form"){
-			sql="SELECT * FROM `surveyform`";
-			input=[]
-		}	    
-    	conn.query(sql,input, function(error, rows, fields){
-        	if ( error ){
-        	    res.status(400).send('Error in database operation');
-        	} else 
-        	{
-            	if(rows.length>0){
-            		res.json(rows)
-            	}else
-            	{
-            		res.send('not found data');
-            	} 
-        	}
-    	});
-	}
-  	
+app.post('/api/login', function(req, res){
+	sercure.authenticate(req,res);
 });
 
-app.listen(process.env.PORT ||3000);
+app.get('/api/profile', sercure.verifyToken, (req, res) => {
+      userController.getProfile(req, res);
+})
+
