@@ -11,7 +11,7 @@ module.exports = {
     }
   },
 
-   getInfo: async function (id) {
+   getFullName: async function (id) {
     try {
       const roleOfUser = await this.getRole(id) 
       if (roleOfUser==1) role='admins'
@@ -29,7 +29,7 @@ module.exports = {
     try {
       const result = await knex('users').where('id', id)
       if (result.length == 0) return Promise.reject(new Error("id is not exit"))
-      return Promise.resolve(result[0])
+      return Promise.resolve(result[0].role)
     } catch (err) {
       return Promise.reject(new Error(err))
     }

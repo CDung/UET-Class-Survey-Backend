@@ -24,4 +24,14 @@ app.post('/api/login', function(req, res){
 app.get('/api/profile', sercure.verifyToken, (req, res) => {
       userController.getProfile(req, res) 
 })
-
+app.get('*',function(req,res){
+		if(req.url===""||req.url==="/"||req.url==="/index.html"||req.url==="/index.html/"||req.url==="/index"){
+		res.sendFile(__dirname+"/index.html")
+		return
+	}	
+	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
+    	res.sendFile(__dirname+req.url)
+    	return
+  	}
+  	res.send("404 not found")
+})

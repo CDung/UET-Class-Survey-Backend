@@ -1,7 +1,8 @@
 const knex = require('knex')(require('../dbconfig'));
 const user= require('../model/user');
 const sercure = require('../control/sercure');
-const host="localhost:3000"
+// const host="localhost:3000"
+ const host="https://classsurvey.herokuapp.com"
 module.exports = { 
       getProfile : async function (req, res) {
       try {
@@ -10,9 +11,9 @@ module.exports = {
           success: false,
           avatar: await user.getAvatar(id),
           role:await user.getRole(id),
-          info: await user.getInfo(id),
+          fullname: await user.getFullName(id),
         }
-        if (result.avatar != null && result.role != null&&result.info != null){ 
+        if (result.avatar != null && result.role != null&&result.fullname != null){ 
           result.avatar = host + result.avatar;
           result.success=true;
           res.send(result);
