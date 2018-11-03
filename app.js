@@ -25,3 +25,4 @@ app.get('/api/profile', sercure.verifyToken, (req, res) => {
       userController.getProfile(req, res);
 })
 
+
