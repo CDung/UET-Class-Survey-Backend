@@ -33,5 +33,5 @@ app.get('*',function(req,res){
     	res.sendFile(__dirname+req.url)
     	return
   	}
-  	res.send("404 not found")
+  	res.sendStatus(403) 
 })

@@ -60,10 +60,10 @@ module.exports = {
     if (typeof token !== 'undefined') { 
       jwt.verify(token, secretCode, (err, authData) => {
         if (err)
-          res.sendStatus(404) 
+          res.sendStatus(403) 
         else next() 
       })
-    } else res.sendStatus(404) 
+    } else res.sendStatus(403) 
   },
 
   getRequesterId: function(req) {
