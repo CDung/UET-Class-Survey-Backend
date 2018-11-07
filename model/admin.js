@@ -25,7 +25,7 @@ module.exports = {
 
     getResulftById : async function (id,course_id) {
         try {
-          const result = await knex('resulft').where({'id' :id,'course_id':course_id }).select('criteria_id','criteria','M','STD','M1','STD1','M2','STD2').orderBy('criteria_id')
+          const result = await knex('resulft').where({'id' :id,'course_id':course_id }).select('criteria_id','criteria','M','STD','M1','STD1','M2','STD2').orderBy('criteria_id','abs')
           if (result.length == 0) return Promise.reject(new Error("id is not exit"))
           return Promise.resolve({success: true, 'result':result})
         } catch (err) {
