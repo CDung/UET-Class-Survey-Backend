@@ -12,7 +12,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
     next() 
 })  
-app.use(express.static('data')) 
+app.use(express.static('./view/')) 
 app.use(cookieParser())   
 app.listen(process.env.PORT ||3000) 
 
@@ -20,15 +20,11 @@ app.listen(process.env.PORT ||3000)
 app.post('/api/login', function(req, res){
 	sercure.authenticate(req,res) 
 }) 
-
 app.get('/api/profile', sercure.verifyToken, (req, res) => {
       userController.getProfile(req, res) 
 })
 app.get('/api/courses', sercure.verifyToken, (req, res) => {
       userController.getCourses(req, res) 
-})
-app.get('/api/form', sercure.verifyToken, (req, res) => {
-      userController.getForm(req, res) 
 })
 app.post('/api/resulft', sercure.verifyToken, (req, res) => {
       userController.getResulft(req, res) 
@@ -36,14 +32,20 @@ app.post('/api/resulft', sercure.verifyToken, (req, res) => {
 app.post('/api/resulftById', sercure.verifyToken, (req, res) => {
       userController.getResulftById(req, res) 
 })
+app.get('/api/form', sercure.verifyToken, (req, res) => {
+      userController.getForm(req, res) 
+})
+app.post('/api/report', sercure.verifyToken, (req, res) => {
+      userController.postReport(req, res) 
+})
 app.get('*',function(req,res){
-		if(req.url===""||req.url==="/"||req.url==="/index.html"||req.url==="/index.html/"||req.url==="/index"){
-		res.sendFile(__dirname+"/index.html")
-		return
-	}	
+	// 	if(req.url===""||req.url==="/"||req.url==="/index.html"||req.url==="/index.html/"||req.url==="/index"){
+	// 	res.sendFile(__dirname+"/index.html")
+	// 	return
+	// }	
 	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
     	res.sendFile(__dirname+req.url)
     	return
   	}
-  	res.sendStatus(403) 
+  	res.sendStatus(404) 
 })

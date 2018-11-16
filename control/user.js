@@ -4,6 +4,7 @@ const admin =require('../model/admin')
 const student= require('../model/student')
 const lecturer= require('../model/lecturer')
 const form= require('../model/form')
+const report= require('../model/report')
 const sercure = require('../control/sercure')
 
 module.exports = { 
@@ -43,22 +44,6 @@ module.exports = {
         }
     },
 
-    getForm : async function (req, res) {
-        try{
-            var id=sercure.getToken(req).id
-            var role=sercure.getToken(req).role
-            let result 
-            if (role==3 || role==1)  result=await form.getForm()
-            if (result.success==true ){                
-                res.send(result)
-            }
-            res.send({ success: false, error: "not found form" })
-        }
-        catch(err) {
-            res.send({ success: false, error: err.message })
-        }
-    } ,
-
     getResulft : async function (req, res) {
         try{
             var id=sercure.getToken(req).id
@@ -92,5 +77,40 @@ module.exports = {
             res.send({ success: false, error: err.message })
         }
     } ,
+
+    getForm : async function (req, res) {
+        try{
+            var id=sercure.getToken(req).id
+            var role=sercure.getToken(req).role
+            let result 
+            if (role==3 || role==1)  result=await form.getForm()
+            if (result.success==true ){                
+                res.send(result)
+            }
+            res.send({ success: false, error: "not found form" })
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    } ,
+
+    postReport : async function (req, res) {
+        try{
+            var id=sercure.getToken(req).id
+            var role=sercure.getToken(req).role
+            var course_id=req.body.course_id
+            var points=req.body.points
+            let result 
+            if (role==3 )  result=await report.postReport(course_id,id,points)
+            if (result.success==true ){                
+                res.send(result)
+            }
+            res.send({ success: false, error: "can't postReport" })
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    } ,
+
 
 }
