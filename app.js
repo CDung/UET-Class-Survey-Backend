@@ -1,7 +1,10 @@
 const express = require('express') 
 const app = express() 
 const sercure=require('./control/sercure') 
-const userController=require('./control/user') 
+const userController=require('./control/user')
+const adminController=require('./control/admin') 
+const lecturerController=require('./control/lecturer') 
+const studentController=require('./control/student') 
 const jsonParser = require('body-parser').json() 
 const cookieParser = require('cookie-parser')
 
@@ -26,23 +29,19 @@ app.get('/api/profile', sercure.verifyToken, (req, res) => {
 app.get('/api/courses', sercure.verifyToken, (req, res) => {
       userController.getCourses(req, res) 
 })
-app.post('/api/resulft', sercure.verifyToken, (req, res) => {
-      userController.getResulft(req, res) 
-})
-app.post('/api/resulftById', sercure.verifyToken, (req, res) => {
-      userController.getResulftById(req, res) 
-})
 app.get('/api/form', sercure.verifyToken, (req, res) => {
       userController.getForm(req, res) 
 })
+app.post('/api/resulft', sercure.verifyToken, (req, res) => {
+      lecturerController.getResulft(req, res) 
+})
+app.post('/api/resulftById', sercure.verifyToken, (req, res) => {
+      adminController.getResulftById(req, res) 
+})
 app.post('/api/report', sercure.verifyToken, (req, res) => {
-      userController.postReport(req, res) 
+      studentController.postReport(req, res) 
 })
 app.get('*',function(req,res){
-	// 	if(req.url===""||req.url==="/"||req.url==="/index.html"||req.url==="/index.html/"||req.url==="/index"){
-	// 	res.sendFile(__dirname+"/index.html")
-	// 	return
-	// }	
 	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
     	res.sendFile(__dirname+req.url)
     	return
