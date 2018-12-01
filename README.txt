@@ -1,0 +1,3 @@
+- import file class_survey.sql
+- edit dbconfig.js
+- open cmd ,type node -app.js

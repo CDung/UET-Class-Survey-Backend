@@ -32,4 +32,12 @@ module.exports = {
           return Promise.reject(new Error(err))
         }
     },
+
+    deleteCriteria : async function(id){
+        try {
+            await knex('surveyform').where({"id": id}).del()
+        } catch (err) {
+        return Promise.reject(err)
+      }
+    }  
 }

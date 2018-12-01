@@ -41,6 +41,9 @@ app.post('/api/resulftById', sercure.verifyToken, (req, res) => {
 app.post('/api/report', sercure.verifyToken, (req, res) => {
       studentController.postReport(req, res) 
 })
+// app.post('/api/deleteCriteria', sercure.verifyToken, (req, res) => {
+//       adminController.deleteCriteria(req, res) 
+// })
 app.get('*',function(req,res){
 	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
     	res.sendFile(__dirname+req.url)
