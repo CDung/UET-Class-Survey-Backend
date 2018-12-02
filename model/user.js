@@ -1,5 +1,7 @@
 const knex = require('knex')(require('../dbconfig')) 
 const host="localhost:3000"
+var formidable = require('formidable')
+var fs = require('fs')
 // const host="https://classsurvey.herokuapp.com"
 
 module.exports = {
@@ -12,5 +14,23 @@ module.exports = {
             return Promise.reject(new Error(err))
         }
     },   
+
+    upAvatar : async function (req,res) {
+        try{
+            var form =  new formidable.IncomingForm();
+            form.uploadDir = "./resource/avatar/";
+            form.parse(req,function (err, fields, file) {
+                var path = file.files.path;
+                var newpath = form.uploadDir + '1'+'.jpg';
+                fs.rename(path, newpath, function (err) {
+                    if (err) throw err;
+                    res.send({success:true});
+                });
+            })
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    } ,
 
 }

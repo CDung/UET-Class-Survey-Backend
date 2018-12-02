@@ -32,6 +32,9 @@ app.get('/api/courses', sercure.verifyToken, (req, res) => {
 app.get('/api/form', sercure.verifyToken, (req, res) => {
       userController.getForm(req, res) 
 })
+app.post('/api/upAvatar', function(req, res) {
+      userController.upAvatar(req, res) 
+})
 app.post('/api/resulft', sercure.verifyToken, (req, res) => {
       lecturerController.getResulft(req, res) 
 })

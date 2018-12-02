@@ -59,5 +59,7 @@ module.exports = {
         }
     } ,
 
-
+    upAvatar : async function (req, res) {
+        await user.upAvatar(req, res)
+    } ,
 }
