@@ -12,8 +12,8 @@ module.exports = {
             if (role==1)  result=await admin.getResulftById(id,course_id)
             if (result.success==true ){                
                 res.send(result)
-            }
-            res.send({ success: false, error: "not found result" })
+            }else
+                res.send({ success: false, error: "not found result" })
         }
         catch(err) {
             res.send({ success: false, error: err.message })

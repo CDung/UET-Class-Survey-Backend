@@ -14,8 +14,8 @@ module.exports = {
             if (role==3 )  result=await student.postReport(course_id,id,points)
             if (result.success==true ){                
                 res.send(result)
-            }
-            res.send({ success: false, error: "can't postReport" })
+            }else
+                res.send({ success: false, error: "can't postReport" })
         }
         catch(err) {
             res.send({ success: false, error: err.message })

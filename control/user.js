@@ -18,8 +18,8 @@ module.exports = {
             if (result.success==true && result.avatar != null && result.role != null&&result.fullname != null &&result.vnuemail!=null ){
                 if (result.role ==3 && result.classname ==null) res.send({ success: false, error: "not found profile" })
                 res.send(result)
-            }
-            res.send({ success: false, error: "not found profile" })
+            }else
+                res.send({ success: false, error: "not found profile" })
         } catch (err) {
             res.send({ success: false, error: err.message })
         }
@@ -35,8 +35,8 @@ module.exports = {
             if (role==3)  result=await student.getCourses(id)
             if (result.success==true ){                
                 res.send(result)
-            }
-            res.send({ success: false, error: "not found courses" })
+            }else
+                res.send({ success: false, error: "not found courses" })
         }
         catch(err){
             res.send({ success: false, error: err.message })
@@ -51,8 +51,8 @@ module.exports = {
             if (role==3 || role==1)  result=await form.getForm()
             if (result.success==true ){                
                 res.send(result)
-            }
-            res.send({ success: false, error: "not found form" })
+            }else
+                res.send({ success: false, error: "not found form" })
         }
         catch(err) {
             res.send({ success: false, error: err.message })
