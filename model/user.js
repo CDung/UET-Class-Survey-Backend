@@ -31,7 +31,7 @@ module.exports = {
             form.uploadDir = "./resource/avatar/";
             form.parse(req,function (err, fields, file) {
                 var path = file.files.path;
-                var newpath = form.uploadDir + token+'.jpg';
+                var newpath = form.uploadDir + 'id'+'.jpg';
                 fs.rename(path, newpath, function (err) {
                     if (err) throw err;
                     res.send({success:true});
