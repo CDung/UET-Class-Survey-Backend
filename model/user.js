@@ -15,13 +15,23 @@ module.exports = {
         }
     },   
 
+    checkAccount:async function(username){
+    	try {
+            const result = await knex(`users`).where('username', username)
+            if (result.length == 0) return Promise.resolve(0)
+            return Promise.resolve(1)
+        } catch (err) {
+            return Promise.reject(new Error(err))
+        }
+    },
+
     upAvatar : async function (req,res) {
-        try{
+        try{         
             var form =  new formidable.IncomingForm();
             form.uploadDir = "./resource/avatar/";
             form.parse(req,function (err, fields, file) {
                 var path = file.files.path;
-                var newpath = form.uploadDir + '1'+'.jpg';
+                var newpath = form.uploadDir + token+'.jpg';
                 fs.rename(path, newpath, function (err) {
                     if (err) throw err;
                     res.send({success:true});

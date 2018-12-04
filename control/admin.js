@@ -3,6 +3,37 @@ const admin= require('../model/admin')
 const sercure = require('../control/sercure')
 
 module.exports = {
+    getAllStudents : async function (req, res) {
+        try{
+            var role =sercure.getToken(req).role
+            let result
+            if (role==1)  result=await admin.getAllStudents()
+            if (result.success==true ){                
+                res.send(result)
+            }else
+                res.send({ success: false, error: "can't get all students" })
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }    
+    },
+
+    getAllLecturers : async function (req, res) {
+        try{
+            var role =sercure.getToken(req).role
+            let result
+            if (role==1)  result=await admin.getAllLecturers()
+            if (result.success==true ){                
+                res.send(result)
+            }else
+                res.send({ success: false, error: "can't get all lecturers" })
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    
+    },
+
 	getResulftById  : async function (req, res) {
         try{            
             var role=sercure.getToken(req).role
