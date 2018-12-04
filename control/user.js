@@ -7,6 +7,7 @@ const form= require('../model/form')
 const sercure = require('../control/sercure')
 
 module.exports = { 
+
     getProfile : async function (req, res) {
         try {
             var id=sercure.getToken(req).id

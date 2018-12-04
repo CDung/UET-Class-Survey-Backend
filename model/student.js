@@ -33,6 +33,15 @@ module.exports = {
         }
     },
 
+    getAllStudents : async function(){
+      try {
+          const result = await knex.select('users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
+          return Promise.resolve({success: true, 'result':result})
+        } catch (err) {
+          return Promise.reject(new Error(err))
+        }
+    },
+
     
 
 }

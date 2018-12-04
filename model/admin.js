@@ -33,29 +33,5 @@ module.exports = {
         }
     },
 
-    deleteCriteria : async function(id){
-        try {
-            await knex('surveyform').where({"id": id}).del()
-        } catch (err) {
-        return Promise.reject(err)
-      }
-    } ,
-
-    getAllStudents : async function(){
-      try {
-          const result = await knex.select('users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
-          return Promise.resolve({success: true, 'result':result})
-        } catch (err) {
-          return Promise.reject(new Error(err))
-        }
-    },
-
-    getAllLecturers : async function(){
-      try {
-          const result = await knex.select('users.username','lecturers.fullname','lecturers.vnuemail').from('users').rightJoin('lecturers','users.id','lecturers.id')
-          return Promise.resolve({success: true, 'result':result})
-        } catch (err) {
-          return Promise.reject(new Error(err))
-        }
-    }
+    
 }

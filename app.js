@@ -38,7 +38,7 @@ app.post('/api/upAvatar', function(req, res) {
 app.post('/api/resulft', sercure.verifyToken, (req, res) => {
       lecturerController.getResulft(req, res) 
 })
-app.post('/api/report', sercure.verifyToken, (req, res) => {
+app.put('/api/report', sercure.verifyToken, (req, res) => {
       studentController.postReport(req, res) 
 })
 app.post('/api/resulftById', sercure.verifyToken, (req, res) => {
@@ -50,8 +50,14 @@ app.get('/api/allStudents', sercure.verifyToken, (req, res) => {
 app.get('/api/allLecturers', sercure.verifyToken, (req, res) => {
       adminController.getAllLecturers(req, res) 
 })
-app.post('/api/deleteCriteria', sercure.verifyToken, (req, res) => {
-      adminController.criteria(req, res) 
+app.delete('/api/criteria', sercure.verifyToken, (req, res) => {
+      adminController.deleteCriteria(req, res) 
+})
+app.put('/api/criteria', sercure.verifyToken, (req, res) => {
+      adminController.createCriteria(req, res) 
+})
+app.post('/api/criteria', sercure.verifyToken, (req, res) => {
+      adminController.editCriteria(req, res) 
 })
 app.get('*',function(req,res){
 	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
