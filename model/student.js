@@ -1,5 +1,6 @@
 const knex = require('knex')(require('../dbconfig')) 
 const user= require('../model/user')
+const sercure = require('../control/sercure')
 
 module.exports = {
     getProfile: async function (id) {
@@ -42,6 +43,38 @@ module.exports = {
         }
     },
 
-    
+    deleteStudent : async function(username){
+        try {
+            id=await user.getId(username)
+            await knex('reportofstudent').where({"id": id}).del()
+            await knex('studentsofcourse').where({"id": id}).del()
+            await knex('students').where({"id": id}).del()
+            await knex('users').where({"id": id}).del()
+        } catch (err) {
+        return Promise.reject(err)
+      }
+    } ,
 
+    createStudent : async function(username,password,fullname,vnuemail,classname){
+        try {
+            if (await user.checkAccount(username)) throw new Error ("username was exited")    
+            password=sercure.encrypt(password)      
+            await knex('users').insert({"username":username,"password":password,"role":3})
+            id=await user.getId(username)
+            await knex('students').insert({"id":id,"fullname":fullname,"vnuemail":vnuemail,"classname":classname})
+        } catch (err) {
+        return Promise.reject(err)
+      }
+    } ,
+
+    editStudentInfo : async function(username,newname,fullname,vnuemail,classname){
+        try {
+            if (await user.checkAccount(newname)) throw new Error ("new username was exited") 
+            id=await user.getId(username)       
+            await knex('users').insert({"username":username,"password":password,"role":3})            
+            await knex('students').insert({"id":id,"fullname":fullname,"vnuemail":vnuemail,"classname":classname})
+        } catch (err) {
+        return Promise.reject(err)
+      }
+    } ,
 }

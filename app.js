@@ -59,6 +59,12 @@ app.put('/api/criteria', sercure.verifyToken, (req, res) => {
 app.post('/api/criteria', sercure.verifyToken, (req, res) => {
       adminController.editCriteria(req, res) 
 })
+app.delete('/api/student', sercure.verifyToken, (req, res) => {
+      adminController.deleteStudent(req, res) 
+})
+app.put('/api/student', sercure.verifyToken, (req, res) => {
+      adminController.createStudent(req, res) 
+})
 app.get('*',function(req,res){
 	if (req.url.startsWith("/resource")&&req.url.endsWith(".jpg")) {
     	res.sendFile(__dirname+req.url)

@@ -59,7 +59,6 @@ module.exports = {
         try{
             var role=sercure.getToken(req).role
             var id=req.body.id
-            let result
             if (role==1) await form.deleteCriteria(id);             
             res.send({ success: true})
         }
@@ -72,7 +71,6 @@ module.exports = {
         try{
             var role=sercure.getToken(req).role
             var criteria=req.body.criteria
-            let result
             if (role==1) await form.createCriteria(criteria);             
             res.send({ success: true})
         }
@@ -86,8 +84,35 @@ module.exports = {
             var role=sercure.getToken(req).role
             var id=req.body.id
             var criteria=req.body.criteria
-            let result
             if (role==1) await form.editCriteria(id,criteria);             
+            res.send({ success: true})
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    } ,
+
+    deleteStudent : async function (req,res){
+        try{
+            var role=sercure.getToken(req).role
+            var username=req.body.username
+            if (role==1) await student.deleteStudent(username)             
+            res.send({ success: true})
+        }
+        catch(err) {
+            res.send({ success: false, error: err.message })
+        }
+    } ,
+
+    createStudent : async function (req,res){
+        try{
+            var role=sercure.getToken(req).role
+            var username=req.body.username
+            var password=req.body.password
+            var fullname=req.body.fullname
+            var vnuemail=req.body.vnuemail
+            var classname=req.body.classname
+            if (role==1) await student.createStudent(username,password,fullname,vnuemail,classname)             
             res.send({ success: true})
         }
         catch(err) {

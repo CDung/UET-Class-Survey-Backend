@@ -25,6 +25,16 @@ module.exports = {
         }
     },
 
+    getId: async function (username) {
+        try {
+            const result = await knex(`users`).where('username', username)
+            if (result.length == 0) return Promise.reject(new Error("id is not exit"))
+            return Promise.resolve(result[0].id)
+        } catch (err) {
+            return Promise.reject(new Error(err))
+        }
+    },
+
     upAvatar : async function (req,res) {
         try{         
             var form =  new formidable.IncomingForm();
