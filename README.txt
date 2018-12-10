@@ -1,7 +1,7 @@
 - type in cmd : git clone https://github.com/CDung/class_survey
-- import file class_survey.sql
-- edit dbconfig.js
-- open cmd ,type node -app.js
+- import file by cmd or phpmyadmin: class_survey.sql
+- edit file : db/dbconfig.js
+- open cmd ,type : npm start
 
 
 username

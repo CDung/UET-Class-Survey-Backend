@@ -1,24 +1,25 @@
 {
-  "name": "classsurvey",
+  "name": "class_survey",
   "version": "1.0.0",
-  "description": "",
-  "main": "myfirst.js",
+  "description": "server ",
+  "main": "index.js",
+  "scripts": {
+    "start": "set NODE_ENV=development&& nodemon app.js",
+    "test": "export NODE_ENV=test || set NODE_ENV=test&& nodemon app.js"
+  },
+  "author": "dungntc",
+  "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.3",
-    "ejs": "^2.6.1",
+    "app": "^0.1.0",
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "formidable": "^1.2.1",
-    "jsonwebtoken": "^8.3.0",
+    "jsonwebtoken": "^8.4.0",
     "knex": "^0.15.2",
     "lodash": "^4.17.11",
     "mysql": "^2.16.0",
+    "node-mysql-importer": "0.0.10",
     "nodemon": "^1.18.7"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC"
+  }
 }
