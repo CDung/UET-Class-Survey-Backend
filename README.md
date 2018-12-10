@@ -6,17 +6,17 @@ npm install
 npm start
 
 
-username
+username {
 admin: 
 	admin
-	dungntc
+	dungntc } {
 student :
 	quangthn
-	binhnt
+	binhnt }{ 
 lecturer:
 	thanhld
 	maitt
 	donv
-	anhnv
+	anhnv }
 
 pass:12345678
