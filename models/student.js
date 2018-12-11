@@ -4,7 +4,7 @@ const user= require('./user')
 const getProfile= async (id)=> {
   try {
     const result = await knex('students').where('id', id)
-    if (result.length == 0) return new Error("not found")
+    if (result.length == 0) throw new Error("not found")
     return Promise.resolve({avatar: await user.getAvatar(id), role:1,fullname:result[0].fullname,vnuemail : result[0].vnuemail,classname: result[0].classname})
   } catch (err) {
     throw err
@@ -13,8 +13,8 @@ const getProfile= async (id)=> {
 
 const getCourses= async (id)=> {
   try { 
-    const result = await knex('coursesofstudents').where('id', id).select('done','course_id','subject','lecturers')
-    if (result.length == 0) return new Error("not found or not have course")
+    const result = await knex('coursesofstudents').where('id', id).select('done','course_id','subject','lecturer')
+    if (result.length == 0) throw new Error("not found or not have course")
     return result
   } catch (err) {
     throw err
@@ -35,7 +35,7 @@ const postReport=async(course_id,id,points)=>{
 const getAllStudents= async ()=> {
   try { 
     const result = await knex.select('users.id','users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
-    if (result.length == 0) return new Error("not found or not have student")
+    if (result.length == 0) throw new Error("not found or not have student")
     return result
   } catch (err) {
     throw err
