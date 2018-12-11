@@ -5,7 +5,7 @@ const getProfile= async (id)=> {
   try {
     const result = await knex('lecturers').where('id', id)
     if (result.length == 0) throw new Error("not found")
-    return Promise.resolve({avatar: await user.getAvatar(id), role:1,fullname:result[0].fullname,vnuemail : result[0].vnuemail})
+    return Promise.resolve({avatar: await user.getAvatar(id), role:2,fullname:result[0].fullname,vnuemail : result[0].vnuemail})
   } catch (err) {
     throw err
   }
