@@ -21,12 +21,12 @@ const getCourses= async (id)=> {
   }
 }
 
-const getResulft=async (id,course_id)=>{
+const getResult=async (id,course_id)=>{
   try {
     const surveyInfo =await knex('surveyinfo').where({'id' :id,'course_id':course_id })
-  	const resultTable= await knex('resulft').where({'id' :id,'course_id':course_id }).select('criteria_id','criteria','M','STD','M1','STD1','M2','STD2').orderBy('criteria_id')
-    if (resultTable.length == 0 && surveyInfo.length == 0) throw new Error("not found or not have surveyinfo and result table")
-    if (surveyInfo.length == 0) throw new Error("not found or not have surveyinfo ")
+  	const resultTable= await knex('result').where({'id' :id,'course_id':course_id }).select('criteria_id','criteria','M','STD','M1','STD1','M2','STD2').orderBy('criteria_id')
+    if (resultTable.length == 0 && surveyInfo.length == 0) throw new Error("not found or not have survey info and result table")
+    if (surveyInfo.length == 0) throw new Error("not found or not have survey info ")
     return {"surveyInfo":surveyInfo[0],"resultTable":resultTable}
   } catch (err) {
     throw err
@@ -46,6 +46,6 @@ const getAllLecturers= async ()=> {
 module.exports = {
   getProfile,
   getCourses,
-  getResulft,
+  getResult,
   getAllLecturers,
 }

@@ -4,12 +4,12 @@ const student= require('../models/student')
 const lecturer= require('../models/lecturer')
 const form= require('../models/form')
 
-const getResulftById =async (req,res) =>{
+const getResultById =async (req,res) =>{
   try{
       const {role}=req.sender
       const {id,course_id}=req.body
       let result 
-      if (role==1)  result=await admin.getResulftById(id,course_id)
+      if (role==1)  result=await admin.getResultById(id,course_id)
       else throw new Error("this role wasn't allowed access")
       res.send(result)
   }catch(error){
@@ -42,7 +42,7 @@ const getAllLecturers =async (req,res) =>{
 }
 
 module.exports = {
-  getResulftById,
+  getResultById,
   getAllStudents,
   getAllLecturers,
 }
