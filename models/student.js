@@ -32,19 +32,9 @@ const postReport=async(course_id,id,points)=>{
   }
 }
 
-const getAllStudents= async ()=> {
-  try { 
-    const result = await knex.select('users.id','users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
-    if (result.length == 0) throw new Error("not found or not have student")
-    return result
-  } catch (err) {
-    throw err
-  }
-}
 
 module.exports = {
   getProfile,
   getCourses,
   postReport,
-  getAllStudents
 }

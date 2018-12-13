@@ -21,6 +21,8 @@
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "node-mysql-importer": "0.0.10",
-    "nodemon": "^1.18.7"
+    "nodemon": "^1.18.7",
+    "path": "^0.12.7",
+    "xlsx": "^0.14.1"
   }
 }

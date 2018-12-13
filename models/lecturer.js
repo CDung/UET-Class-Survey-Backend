@@ -33,19 +33,9 @@ const getResult=async (id,course_id)=>{
   }
 }
 
-const getAllLecturers= async ()=> {
-  try { 
-    const result = await knex.select('users.username','lecturers.fullname','lecturers.vnuemail').from('users').rightJoin('lecturers','users.id','lecturers.id')
-    if (result.length == 0) throw new Error("not found or not have lecturer")
-    return result
-  } catch (err) {
-    throw err
-  }
-}
 
 module.exports = {
   getProfile,
   getCourses,
   getResult,
-  getAllLecturers,
 }
