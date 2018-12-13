@@ -1,5 +1,6 @@
 const knex = require('knex')(require('../db/dbconfig')) 
 const host="localhost:3000"
+// const host="classsurvey.herokuapp.com"
 
 const getAvatar= async (id)=> {
   try {

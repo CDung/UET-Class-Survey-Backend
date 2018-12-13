@@ -5,7 +5,7 @@ const express = require('express')
 const app = express() 
 const bodyParser = require('body-parser')
 const router = require('./router/router')
-const port = process.env.port
+const port = process.env.PORT
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
