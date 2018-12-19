@@ -15,12 +15,12 @@
                         <h3 class="panel-title">Class survey -upload file xlsx</h3>
                     </div>
                     <div class="panel-body">
-                        <form action="http://localhost:3000/api/upList" method="post" enctype="multipart/form-data">
+                        <form action="http://localhost:3000/api/upList?role=3" method="post" enctype="multipart/form-data">
                             <legend>Upload file</legend>
                             <div class="form-group">
                                 <label for="">File</label>
                                 <input type="file" class="form-control" name="files">
-                                <input type="text" name="role" value="3"><br>
+                                <!-- <input type="text" name="role" value="3"><br> -->
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>

@@ -82,9 +82,43 @@ const getForm =async (req,res) =>{
 }
 
 
+const updatePassword=async(req,res)=>{
+  try{
+    const {id,role}=req.sender
+    const password=req.body.password
+    let result 
+    if (role==1 || role==2 ||role==3)  result = await user.updatePassword(id,password)
+    else throw new Error("this role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
+const updateInfo=async(req,res)=>{
+  try{
+    const {id,role}=req.sender
+    let account={
+      role:role,
+      username:req.body.username,
+      fullname:req.body.fullname,
+      vnuemail:req.body.vnuemail,
+      classname:req.body.classname
+    }
+    let result 
+    if (role==1 ||role==2 ||role==3)  result = await user.updateInfo(id,account)
+    else throw new Error("this role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 module.exports = {
   login,
   getProfile,
+  updatePassword,
+  updateInfo,
   getCourses,
   getForm,
 }

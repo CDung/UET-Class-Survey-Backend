@@ -22,6 +22,8 @@ const deleteForm= async ()=> {
 
 const createForm= async (data)=> {
   try { 
+    result=await knex('courses').select()
+    if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")
   	var maxIndex= await knex('surveyform').max('id')
     index=maxIndex[0]["max(`id`)"]
     if(index==null) index=0

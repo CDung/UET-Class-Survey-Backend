@@ -12,16 +12,17 @@ router.post('/login',user.login)
 router.get('/profile', authenticate ,user.getProfile)
 router.get('/courses', authenticate ,user.getCourses)
 router.get('/form', authenticate ,user.getForm)
+router.post('/password',authenticate ,user.updatePassword)
+router.post('/info',authenticate ,user.updateInfo)
 
 router.post('/result', authenticate ,lecturer.getResult)
 
 router.put('/report', authenticate ,student.postReport)
 
 router.post('/resultById', authenticate ,admin.getResultById)
-
 router.get('/allAccounts', authenticate ,admin.getAllAccounts)
 router.delete('/allAccounts', authenticate ,admin.deleteAllAccounts)
-// router.put('/account', authenticate ,admin.createAccount)
+router.put('/account', authenticate ,admin.createAccount)
 router.delete('/account', authenticate ,admin.deleteAccount)
 router.delete('/form', authenticate ,admin.deleteForm)
 router.put('/form', authenticate ,admin.createForm)

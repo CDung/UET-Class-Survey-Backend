@@ -56,25 +56,35 @@ const deleteAllAccounts =async (req,res) =>{
 
 const createListAccounts =async (req,res) =>{
   try{
+    const accountsRole=req.query.role
+    if (accountsRole !=2 && accountsRole !=3) throw new Error("Accounts role is invalid")
     let result 
-    result= await admin.createListAccounts(req.listAccounts,3)
+    result= await admin.createListAccounts(req.listAccounts,accountsRole)
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
   }
 }
 
-// const createAccount =async (req,res) =>{
-//   try{
-//     const {role}=req.sender
-//     let result 
-//     if (role==1)result= await admin.getAllAccounts()
-//     else throw new Error("this role wasn't allowed access")
-//     res.send(result)
-//   }catch(error){
-//     res.status(400).send({message: error.message})
-//   }
-// }
+const createAccount =async (req,res) =>{
+  try{
+    const {role}=req.sender
+    let account={
+      role:req.body.role,
+      username:req.body.username,
+      password:req.body.password,
+      fullname:req.body.fullname,
+      vnuemail:req.body.vnuemail,
+      classname:req.body.classname
+    }
+    let result 
+    if (role==1) result= await admin.createAccount(account)
+    else throw new Error("this role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
 
 const deleteForm =async (req,res) =>{
   try{
@@ -119,7 +129,7 @@ module.exports = {
   deleteAllAccounts,  
   createListAccounts,
   deleteAccount,
-  // createAccount,
+  createAccount,
   deleteForm,
   createForm,
   checkUpdateForm

@@ -10,5 +10,6 @@ module.exports = {
   	password: "12345678",
   	database: "class_survey"
   },
-  useNullAsDefault: true
+  useNullAsDefault: true,
+  acquireConnectionTimeout: 10000
 }

@@ -21,7 +21,7 @@ const upAvatar = async  (req,res)=> {
     }
 } 
 const upList = async  (req,res,next)=> {
-    try{      
+    try{   
         var form =  new formidable.IncomingForm()         
         form.uploadDir = "./public/resource/xlsx/"
         form.parse(req,function (err, fields, file) {

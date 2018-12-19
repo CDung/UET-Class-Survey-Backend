@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.4.0",
     "knex": "^0.15.2",
     "lodash": "^4.17.11",
+    "moment": "^2.23.0",
     "morgan": "^1.9.1",
     "mysql": "^2.16.0",
     "node-mysql-importer": "0.0.10",
