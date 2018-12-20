@@ -31,7 +31,8 @@ router.delete('/form', authenticate ,admin.deleteForm)
 router.put('/form', authenticate ,admin.createForm)
 router.get('/checkUpdateForm', authenticate ,admin.checkUpdateForm)
 router.post('/upList', authenticate,storage.upList,admin.createListAccounts)
-// router.post('/upAvatar',authenticate, storage.upAvatar)
-// router.post('/upListStudentsOfCourse',authenticate, storage.upListStudentsOfCourse,admin.createCourse)
+router.put('/course', authenticate,storage.upList,admin.createCourse)
+router.delete('/course', authenticate,admin.deleteCourse)
+router.delete('/courses', authenticate,admin.deleteAllCourses)
 
 module.exports = router;

@@ -46,7 +46,7 @@ const updateInfo= async (id,account)=> {
       throw new Error ("invalid username ")
     else{
       account.username=standard(account.username)
-      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("exited username") 
+      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("existed username") 
     }
 
     if(!validate.isFullname(account.fullname))

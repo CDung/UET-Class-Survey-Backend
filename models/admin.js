@@ -70,7 +70,7 @@ const createListAccounts=async(listAccounts,role)=>{
         throw new Error ("have some invalid username or xlsx is imformal")
       else{
         obj.username=standard(obj.username)
-        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("have some exited username") 
+        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("have some existed username") 
       }
 
       if(!validate.isPassword(obj.password))
@@ -174,7 +174,7 @@ const createAccount= async (account)=> {
       throw new Error ("invalid username ")
     else{
       account.username=standard(account.username)
-      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("exited username") 
+      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("existed username") 
     }
 
     if(!validate.isPassword(account.password))
@@ -212,6 +212,88 @@ const createAccount= async (account)=> {
   }
 }
 
+const deleteCourse= async (course_id)=> {
+  try { 
+    const result = await knex('courses').select().where({course_id:course_id})
+    if (result.length == 0) throw new Error("not found course")      
+    await knex('reportofstudent').where({course_id:course_id}).del()
+    await knex('lecturersofcourse').where({course_id:course_id}).del()
+    await knex('studentsofcourse').where({course_id:course_id}).del()
+    await knex('courses').where({course_id:course_id}).del()
+    return "OK"
+  } catch (err) {
+    throw err
+  }
+}
+
+const deleteAllCourses= async ()=> {
+  try { 
+    await knex('reportofstudent').del()
+    await knex('lecturersofcourse').del()
+    await knex('studentsofcourse').del()
+    await knex('courses').del()
+    return "OK"
+  } catch (err) {
+    throw err
+  }
+}
+
+const createCourse= async (listAccounts,data)=> {
+  try { 
+
+    var result = await knex('courses').select().where({course_id:data.course_id})
+    if (result.length != 0) throw new Error("new course_id existed")  
+
+    result = await knex('lecturers').select().where({id:data.lecturer_id})
+    if (result.length == 0) throw new Error("lecturer_id didn't exist") 
+
+    result =await knex('users').select('id','username')
+    if (result.length == 0) throw new Error("not found list account") 
+    idByUsername = result.reduce(function(map, obj) {
+      map[obj.username] = obj.id
+      return map
+      }, {}
+    )  
+
+    listAccounts.some(obj=>{
+      if(!validate.isUsername(obj.username))
+        throw new Error ("have some invalid username or xlsx is imformal")
+      else{
+        if(idByUsername[standard(obj.username)]==null) throw new Error ("student username didn't exist") 
+        obj.id= idByUsername[standard(obj.username)]
+      }
+    })
+    
+    listStudents =listAccounts.map(function (obj) {
+      return {
+        id:obj.id,
+        course_id:data.course_id
+      }
+    })
+     
+    await knex('courses').insert({
+      course_id: standard(data.course_id),
+      subject:standard(data.subject),
+      year:standard(data.year),
+      semester:standard(data.semester),
+      time:standard(data.year),
+      place:standard(data.place),
+      credit:standard(data.credit),
+    })
+
+    await knex('lecturersofcourse').insert({
+      course_id: standard(data.course_id),
+      id: standard(data.lecturer_id),
+    }) 
+
+    await knex('studentsofcourse').insert(listStudents)
+    return "OK"
+  }catch (err) {
+    throw err
+  }
+}
+
+
 module.exports = {
   getProfile,
   getCourses,
@@ -221,4 +303,7 @@ module.exports = {
   createListAccounts,
   deleteAccount,
   createAccount,
+  createCourse,
+  deleteCourse,
+  deleteAllCourses
 }
