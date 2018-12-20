@@ -3,16 +3,18 @@ const { parse } = require('querystring');
 const fs = require('fs')
 const XLSX = require('xlsx')
 
-const upAvatar = async  (req,res)=> {
+const upAvatar = async  (req,res,next)=> {
     try{         
+        const id=req.sender.id
+        if (id==null) throw new Error("id err")
         var form =  new formidable.IncomingForm()
         form.uploadDir = "./public/resource/avatar/"
         form.parse(req,function (err, fields, file) {
             var path = file.files.path
-            var newpath = form.uploadDir + 'id'+'.jpg'
+            var newpath = form.uploadDir + id+'.jpg'
             fs.rename(path, newpath, function (err) {
                 if (err) throw err
-                res.send("OK")
+                next()
             })
         })
     }
@@ -21,8 +23,8 @@ const upAvatar = async  (req,res)=> {
     }
 } 
 const upList = async  (req,res,next)=> {
-    try{   
-        var form =  new formidable.IncomingForm()         
+    try{           
+        var form =  new formidable.IncomingForm()        
         form.uploadDir = "./public/resource/xlsx/"
         form.parse(req,function (err, fields, file) {
             var path = file.files.path

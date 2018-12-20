@@ -101,7 +101,7 @@ const updateInfo=async(req,res)=>{
     let account={
       role:role,
       username:req.body.username,
-      fullname:req.body.fullname,
+      fullname:req.body.fullname,   
       vnuemail:req.body.vnuemail,
       classname:req.body.classname
     }
@@ -114,11 +114,24 @@ const updateInfo=async(req,res)=>{
   }
 }
 
+const updateAvatar=async(req,res)=>{
+  try{
+    const {id,role}=req.sender
+    let result 
+    if (role==1 || role==2 ||role==3)  result = await user.updateAvatar(id)
+    else throw new Error("this role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 module.exports = {
   login,
   getProfile,
   updatePassword,
   updateInfo,
+  updateAvatar,
   getCourses,
   getForm,
 }

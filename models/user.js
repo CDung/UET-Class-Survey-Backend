@@ -4,6 +4,7 @@ const validate=require('../utilities/validate')
 const {standard}=require('../utilities/validate')
 
 const host="localhost:3000"
+const avatarPath="/resource/avatar/"
 // const host="classsurvey.herokuapp.com"
 
 const getAvatar= async (id)=> {
@@ -75,8 +76,22 @@ const updateInfo= async (id,account)=> {
   }
 }
 
+const updateAvatar= async (id)=> {
+  try {
+  	const path=avatarPath+id+".jpg"
+  	console.log(path)
+    const result = await knex('users').where({'id':id})
+    if (result.length == 0) throw new Error("not found account")
+    await knex('users').where({id:id}).update({avatar:path})
+    return "OK"
+  } catch (err) {
+    throw err
+  }
+}
+
 module.exports = {
   getAvatar,  
   updatePassword,
   updateInfo,
+  updateAvatar
 }
