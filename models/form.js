@@ -36,7 +36,7 @@ const createForm= async (data)=> {
     })
 	await knex('surveyform').insert(input)
 	return ("OK")
-  } catch (err) {
+  } catch (err) { 
     throw err
   }
 }
