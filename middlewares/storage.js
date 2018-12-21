@@ -40,7 +40,7 @@ const upList = async  (req,res,next)=> {
           place:fields.place,
           credit:fields.credit,
         }   
-        var path = file.files.path
+        var path = file.file.path
         var newpath = form.uploadDir + 'l.xlsx'
         fs.rename(path, newpath, function (err) {
           try{
