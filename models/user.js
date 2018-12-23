@@ -41,7 +41,6 @@ const updateInfo= async (id,account)=> {
     const result = await knex('users').where({'id':id,'role':account.role})
     if (result.length == 0) throw new Error("Not found account")
 
-
     if(!validate.isFullname(account.fullname))
       throw new Error ("Invalid fullname ") 
     else

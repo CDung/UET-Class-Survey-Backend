@@ -144,12 +144,13 @@ const updateAccountInfo=async(req,res)=>{
     const {role}=req.sender
     let account={
       role:req.body.role,
+      username:req.body.username,
       fullname:req.body.fullname,   
       vnuemail:req.body.vnuemail,
       classname:req.body.classname
     }
     let result 
-    if (role==1)  result = await user.updateInfo(req.body.id,account)
+    if (role==1)  result = await admin.updateInfo(req.body.id,account)
     else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
