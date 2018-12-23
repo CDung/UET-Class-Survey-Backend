@@ -10,7 +10,7 @@ const avatarPath="/resource/avatar/"
 const getAvatar= async (id)=> {
   try {
     const result = await knex(`users`).where('id', id)
-    if (result.length == 0) throw new Error("not found")
+    if (result.length == 0) throw new Error("Not found")
     return host+result[0].avatar
   } catch (err) {
     throw err
@@ -20,10 +20,10 @@ const getAvatar= async (id)=> {
 const updatePassword= async (id,password)=> {
   try {
     const result = await knex('users').where({'id':id})
-    if (result.length == 0) throw new Error("not found account")
+    if (result.length == 0) throw new Error("Not found account")
 
     if(!validate.isPassword(password))
-      throw new Error ("invalid password")
+      throw new Error ("Invalid password")
     else
       password=code.encrypt(""+password)
 
@@ -39,33 +39,25 @@ const updateInfo= async (id,account)=> {
   	if (account.role!=1 && account.role!=2 && account.role!=3 ) throw new Error("Account role is invalid")
 
     const result = await knex('users').where({'id':id,'role':account.role})
-    if (result.length == 0) throw new Error("not found account")
+    if (result.length == 0) throw new Error("Not found account")
 
-    usernameDB = await knex('users').whereNot({'id':id}).select('username').map(function (obj) {return obj.username}) 
-    if(!validate.isUsername(account.username))
-      throw new Error ("invalid username ")
-    else{
-      account.username=standard(account.username)
-      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("existed username") 
-    }
 
     if(!validate.isFullname(account.fullname))
-      throw new Error ("invalid fullname ") 
+      throw new Error ("Invalid fullname ") 
     else
       account.fullname=standard(account.fullname)
 
     if(!validate.isVnuEmail(account.vnuemail))
-      throw new Error ("invalid vnuemail ") 
+      throw new Error ("Invalid vnuemail ") 
     else
       account.vnuemail=standard(account.vnuemail)
 
     if(account.role==3 ){
       if(!validate.isClassname(account.classname))
-        throw new Error ("invalid classname ") 		
+        throw new Error ("Invalid classname ") 		
       else
         account.classname=standard(account.classname)		
     } 	
-    await knex('users').where({id:id}).update({username:account.username})
     if(account.role==1)await knex('admins').where({id:id}).update({fullname:account.fullname,vnuemail:account.vnuemail})
     if(account.role==2)await knex('lecturers').where({id:id}).update({fullname:account.fullname,vnuemail:account.vnuemail})
 	if(account.role==3)await knex('students').where({id:id}).update({fullname:account.fullname,vnuemail:account.vnuemail,classname:account.classname})
@@ -81,7 +73,7 @@ const updateAvatar= async (id)=> {
   	const path=avatarPath+id+".jpg"
   	console.log(path)
     const result = await knex('users').where({'id':id})
-    if (result.length == 0) throw new Error("not found account")
+    if (result.length == 0) throw new Error("Not found account")
     await knex('users').where({id:id}).update({avatar:path})
     return "OK"
   } catch (err) {

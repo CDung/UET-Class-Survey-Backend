@@ -10,7 +10,7 @@ const upAvatar = async  (req,res,next)=> {
     var form =  new formidable.IncomingForm()
     form.uploadDir = "./public/resource/avatar/"
     form.parse(req,function (err, fields, file) {
-      var path = file.files.path
+      var path = file.file.path
       var newpath = form.uploadDir + id+'.jpg'
       fs.rename(path, newpath, function (err) {
         if (err) throw err

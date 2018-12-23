@@ -48,7 +48,7 @@ const getProfile =async (req,res) =>{
     if (role==1)  result=await admin.getProfile(id)
     else if (role==2)  result=await lecturer.getProfile(id)
     else if (role==3)  result=await student.getProfile(id)
-    else throw new Error("this role wasn't allowed access")
+    else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
@@ -62,7 +62,7 @@ const getCourses =async (req,res) =>{
     if (role==1)  result=await admin.getCourses() 
     else if (role==2)  result=await lecturer.getCourses(id)
     else if (role==3)  result=await student.getCourses(id)
-    else throw new Error("this role wasn't allowed access")  
+    else throw new Error("This role wasn't allowed access")  
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
@@ -74,7 +74,7 @@ const getForm =async (req,res) =>{
     const {id,role}=req.sender
     let result 
     if (role==1 ||role==3)  result=await form.getForm()
-    else throw new Error("this role wasn't allowed access")
+    else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
@@ -88,7 +88,7 @@ const updatePassword=async(req,res)=>{
     const password=req.body.password
     let result 
     if (role==1 || role==2 ||role==3)  result = await user.updatePassword(id,password)
-    else throw new Error("this role wasn't allowed access")
+    else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
@@ -100,14 +100,13 @@ const updateInfo=async(req,res)=>{
     const {id,role}=req.sender
     let account={
       role:role,
-      username:req.body.username,
       fullname:req.body.fullname,   
       vnuemail:req.body.vnuemail,
       classname:req.body.classname
     }
     let result 
     if (role==1 ||role==2 ||role==3)  result = await user.updateInfo(id,account)
-    else throw new Error("this role wasn't allowed access")
+    else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})
@@ -119,7 +118,7 @@ const updateAvatar=async(req,res)=>{
     const {id,role}=req.sender
     let result 
     if (role==1 || role==2 ||role==3)  result = await user.updateAvatar(id)
-    else throw new Error("this role wasn't allowed access")
+    else throw new Error("This role wasn't allowed access")
     res.send(result)
   }catch(error){
     res.status(400).send({message: error.message})

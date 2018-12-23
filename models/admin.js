@@ -7,7 +7,7 @@ const {standard}=require('../utilities/validate')
 const getProfile= async (id)=> {
   try {
     const result = await knex('admins').where('id', id)
-    if (result.length == 0) throw new Error("not found profile")
+    if (result.length == 0) throw new Error("Not found profile")
     return Promise.resolve({avatar: await user.getAvatar(id), role:1,fullname:result[0].fullname,vnuemail : result[0].vnuemail})
   } catch (err) {
     throw err
@@ -17,7 +17,7 @@ const getProfile= async (id)=> {
 const getCourses= async ()=> {
   try { 
     const result = await knex('coursesoflecturers').select('course_id','id','fullname','subject')
-    if (result.length == 0) throw new Error("not found or not have course")
+    if (result.length == 0) throw new Error("Not found or not have course")
     return result
   } catch (err) {
     throw err
@@ -28,8 +28,8 @@ const getResultById= async (id,course_id)=> {
   try {
     const surveyInfo =await knex('surveyinfo').where({'id' :id,'course_id':course_id })
     const resultTable= await knex('result').where({'id' :id,'course_id':course_id }).select('criteria_id','criteria','M','STD','M1','STD1','M2','STD2').orderBy('criteria_id')
-    if (resultTable.length == 0 && surveyInfo.length == 0) throw new Error("not found or not have survey info and result table")
-    if (surveyInfo.length == 0) throw new Error("not found or not have survey info ")
+    if (resultTable.length == 0 && surveyInfo.length == 0) throw new Error("Not found or not have survey info and result table")
+    if (surveyInfo.length == 0) throw new Error("Not found or not have survey info ")
     return {"surveyInfo":surveyInfo[0],"resultTable":resultTable}
   } catch (err) {
     throw err
@@ -41,7 +41,7 @@ const getAllAccounts =async ()=> {
     listStudents = await knex.select('users.id','users.role','users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
     listLecturers = await knex.select('users.id','users.role','users.username','lecturers.fullname','lecturers.vnuemail').from('users').rightJoin('lecturers','users.id','lecturers.id')
     const result=listLecturers.concat(listStudents)
-    if (result.length == 0) throw new Error("not found or not have account")
+    if (result.length == 0) throw new Error("Not found or not have account")
     return result
   } catch (err) {
     throw err
@@ -67,30 +67,30 @@ const createListAccounts=async(listAccounts,role)=>{
     usernameDB = await knex('users').select('username').map(function (obj) {return obj.username}) 
     listAccounts.some(obj=>{
       if(!validate.isUsername(obj.username))
-        throw new Error ("have some invalid username or xlsx is imformal")
+        throw new Error ("Have some invalid username or xlsx is informal")
       else{
         obj.username=standard(obj.username)
-        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("have some existed username") 
+        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("Have some existed username") 
       }
 
       if(!validate.isPassword(obj.password))
-        throw new Error ("have some invalid password or xlsx is imformal")
+        throw new Error ("Have some invalid password or xlsx is informal")
       else
         obj.password=code.encrypt(""+obj.password)
 
       if(!validate.isFullname(obj.fullname))
-        throw new Error ("have some invalid fullname or xlsx is imformal") 
+        throw new Error ("Have some invalid fullname or xlsx is informal") 
       else
         obj.fullname=standard(obj.fullname)
 
       if(!validate.isVnuEmail(obj.vnuemail))
-        throw new Error ("have some invalid vnuemail or xlsx is imformal") 
+        throw new Error ("Have some invalid vnuemail or xlsx is informal") 
       else
         obj.vnuemail=standard(obj.vnuemail)
 
       if(role==3 ){
         if(!validate.isClassname(obj.classname))
-          throw new Error ("have some invalid classname or xlsx is imformal") 
+          throw new Error ("Have some invalid classname or xlsx is informal") 
         else
           obj.classname=standard(obj.classname)
       }      
@@ -135,7 +135,7 @@ const createListAccounts=async(listAccounts,role)=>{
       })
       await knex('lecturers').insert(listInfo)
     } else
-        throw new Error ("role of list accounts is invalid ")
+        throw new Error ("Role of list accounts is invalid ")
 
     return "OK"
   } catch (err) {
@@ -146,7 +146,7 @@ const createListAccounts=async(listAccounts,role)=>{
 const deleteAccount= async (id)=> {
   try { 
     const result = await knex('users').select('role').where({'id':id})
-    if (result.length == 0) throw new Error("not found account")
+    if (result.length == 0) throw new Error("Not found account")
     if(result[0].role==2){      
       await knex('lecturersofcourse').del().where({'id':id})
       await knex('lecturers').del().where({'id':id})
@@ -158,7 +158,7 @@ const deleteAccount= async (id)=> {
       await knex('students').del().where({'id':id})
       await knex('users').del().where({'id':id})
     }else
-      throw new Error ("role of list accounts is invalid ")
+      throw new Error ("Role of list accounts is invalid ")
     return "OK"
   } catch (err) {
     throw err
@@ -171,30 +171,30 @@ const createAccount= async (account)=> {
 
     usernameDB = await knex('users').select('username').map(function (obj) {return obj.username}) 
     if(!validate.isUsername(account.username))
-      throw new Error ("invalid username ")
+      throw new Error ("Invalid username ")
     else{
       account.username=standard(account.username)
-      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("existed username") 
+      if(usernameDB.indexOf(account.username) >= 0) throw new Error ("Existed username") 
     }
 
     if(!validate.isPassword(account.password))
-      throw new Error ("invalid password ")
+      throw new Error ("Invalid password ")
     else
       account.password=code.encrypt(""+account.password)
 
     if(!validate.isFullname(account.fullname))
-      throw new Error ("invalid fullname ") 
+      throw new Error ("Invalid fullname ") 
     else
       account.fullname=standard(account.fullname)
 
     if(!validate.isVnuEmail(account.vnuemail))
-      throw new Error ("invalid vnuemail ") 
+      throw new Error ("Invalid vnuemail ") 
     else
       account.vnuemail=standard(account.vnuemail)
 
     if(account.role==3 ){
       if(!validate.isClassname(account.classname))
-        throw new Error ("invalid classname ") 
+        throw new Error ("Invalid classname ") 
       else
         account.classname=standard(account.classname)
     } 
@@ -215,7 +215,7 @@ const createAccount= async (account)=> {
 const deleteCourse= async (course_id)=> {
   try { 
     const result = await knex('courses').select().where({course_id:course_id})
-    if (result.length == 0) throw new Error("not found course")      
+    if (result.length == 0) throw new Error("Not found course")      
     await knex('reportofstudent').where({course_id:course_id}).del()
     await knex('lecturersofcourse').where({course_id:course_id}).del()
     await knex('studentsofcourse').where({course_id:course_id}).del()
@@ -242,13 +242,13 @@ const createCourse= async (listAccounts,data)=> {
   try { 
 
     var result = await knex('courses').select().where({course_id:data.course_id})
-    if (result.length != 0) throw new Error("new course_id existed")  
+    if (result.length != 0) throw new Error("New course_id existed")  
 
     result = await knex('lecturers').select().where({id:data.lecturer_id})
     if (result.length == 0) throw new Error("lecturer_id didn't exist") 
 
     result =await knex('users').select('id','username')
-    if (result.length == 0) throw new Error("not found list account") 
+    if (result.length == 0) throw new Error("Not found list account") 
     idByUsername = result.reduce(function(map, obj) {
       map[obj.username] = obj.id
       return map
@@ -257,9 +257,9 @@ const createCourse= async (listAccounts,data)=> {
 
     listAccounts.some(obj=>{
       if(!validate.isUsername(obj.username))
-        throw new Error ("have some invalid username or xlsx is imformal")
+        throw new Error ("Have some invalid username or xlsx is informal")
       else{
-        if(idByUsername[standard(obj.username)]==null) throw new Error ("student username didn't exist") 
+        if(idByUsername[standard(obj.username)]==null) throw new Error ("Student username didn't exist") 
         obj.id= idByUsername[standard(obj.username)]
       }
     })
