@@ -41,7 +41,7 @@ const getAllAccounts =async ()=> {
     listStudents = await knex.select('users.id','users.role','users.username','students.fullname','students.vnuemail','students.classname').from('users').rightJoin('students','users.id','students.id')
     listLecturers = await knex.select('users.id','users.role','users.username','lecturers.fullname','lecturers.vnuemail').from('users').rightJoin('lecturers','users.id','lecturers.id')
     const result=listLecturers.concat(listStudents)
-    if (result.length == 0) throw new Error("Not found or not have account")
+    if (result.length == 0) throw new Error("Not have account")
     return result
   } catch (err) {
     throw err
