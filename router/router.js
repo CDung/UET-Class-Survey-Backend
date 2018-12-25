@@ -16,6 +16,7 @@ router.post('/form', authenticate ,admin.createForm)
 router.post('/account', authenticate ,admin.createAccount)
 router.post('/upList', authenticate,storage.upList,admin.createListAccounts)
 router.post('/course', authenticate,storage.upList,admin.createCourse)
+router.post('/criteria', authenticate ,admin.createCriteria)
 
 router.get('/profile', authenticate ,user.getProfile)
 router.get('/courses', authenticate ,user.getCourses)
@@ -28,11 +29,13 @@ router.put('/info',authenticate ,user.updateInfo)
 router.put('/upAvatar', authenticate,storage.upAvatar,user.updateAvatar)
 router.put('/passwordForAdmin', authenticate ,admin.updateAccountPassword)
 router.put('/infoForAdmin', authenticate ,admin.updateAccountInfo)
+router.put('/criteria', authenticate ,admin.editCriteria)
 
 router.delete('/form', authenticate ,admin.deleteForm)
 router.delete('/account', authenticate ,admin.deleteAccount)
 router.delete('/allAccounts', authenticate ,admin.deleteAllAccounts)
 router.delete('/course', authenticate,admin.deleteCourse)
 router.delete('/courses', authenticate,admin.deleteAllCourses)
+router.delete('/criteria', authenticate ,admin.deleteCriteria)
 
 module.exports = router;

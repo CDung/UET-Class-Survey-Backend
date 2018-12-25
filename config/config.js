@@ -5,7 +5,7 @@ if (env === 'development' || env === 'test') {
   	"development": {
       "PORT": 3000,
    	  "JWT_SECRET": "bebongcute",
-      "TOKEN_EXPIRES_IN": "8640s",
+      "TOKEN_EXPIRES_IN": "86400s",
       "RESET_PASSWORD_EXPIRES_IN": "120s",
       "TOTAL_SEATS": "30"
   	},

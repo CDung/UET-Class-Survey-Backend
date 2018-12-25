@@ -197,6 +197,45 @@ const createCourse =async (req,res) =>{
   }
 }
 
+const createCriteria =async (req,res) =>{
+  try{
+    const {role}=req.sender
+    const {criteria}=req.body
+    let result 
+    if (role==1)result= await form.createCriteria(criteria)
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
+const editCriteria =async (req,res) =>{
+  try{
+    const {role}=req.sender
+    const {id,criteria}=req.body
+    let result 
+    if (role==1)result= await form.editCriteria(id,criteria)
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
+const deleteCriteria=async (req,res) =>{
+  try{
+    const {role}=req.sender
+    const {id}=req.body
+    let result 
+    if (role==1)result= await form.deleteCriteria(id)
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 module.exports = {
   getResultById,
   getAllAccounts,
@@ -212,4 +251,7 @@ module.exports = {
   createCourse,
   deleteCourse,
   deleteAllCourses,
+  editCriteria,
+  createCriteria,
+  deleteCriteria ,
 }
