@@ -1,7 +1,7 @@
 DROP DATABASE IF EXISTS class_survey;
 CREATE DATABASE class_survey ;
 USE class_survey;
-CREATE TABLE `class_survey`.`users` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `username` VARCHAR(30) NOT NULL , `password` VARCHAR(200) NOT NULL , `role` INT(10) NOT NULL , `avatar` VARCHAR(200) NOT NULL DEFAULT '/resource/avatar/default.jpg' , PRIMARY KEY (`id`)) ENGINE = InnoDB;
+CREATE TABLE `class_survey`.`users` ( `id` INT(10) NOT NULL AUTO_INCREMENT , `username` VARCHAR(30) NOT NULL , `password` VARCHAR(200) NOT NULL , `role` INT(10) NOT NULL , `avatar` VARCHAR(200) NOT NULL DEFAULT '/resource/avatar/default.jpg' , PRIMARY KEY (`id`,`username`)) ENGINE = InnoDB;
 CREATE TABLE `class_survey`.`students` ( `id` INT(10) NOT NULL , `fullname` VARCHAR(100) NOT NULL , `vnuemail` VARCHAR(100) NOT NULL , `classname` VARCHAR(100) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 CREATE TABLE `class_survey`.`lecturers` ( `id` INT(10) NOT NULL , `fullname` VARCHAR(100) NOT NULL , `vnuemail` VARCHAR(100) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;
 CREATE TABLE `class_survey`.`admins` ( `id` INT(10) NOT NULL , `fullname` VARCHAR(100) NOT NULL , `vnuemail` VARCHAR(100) NOT NULL , PRIMARY KEY (`id`)) ENGINE = InnoDB;

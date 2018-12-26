@@ -70,9 +70,11 @@ const createListAccounts=async(listAccounts,role)=>{
       if(!validate.isUsername(obj.username))
         throw new Error ("Have some invalid username or xlsx is informal :" +obj.username)
       else{
-        obj.username=standard(obj.username)
-        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("Have some existed username :"+obj.username) 
+        obj.username=standard(obj.username)        
+        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("Have some existed username or duplicate in file :"+obj.username)
+        usernameDB.push(obj.username) 
       }
+
 
       if(!validate.isPassword(obj.password))
         throw new Error ("Have some invalid password or xlsx is informal :"+obj.password)
