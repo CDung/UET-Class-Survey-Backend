@@ -37,5 +37,9 @@ router.delete('/allAccounts', authenticate ,admin.deleteAllAccounts)
 router.delete('/course', authenticate,admin.deleteCourse)
 router.delete('/courses', authenticate,admin.deleteAllCourses)
 router.delete('/criteria', authenticate ,admin.deleteCriteria)
+router.delete('/someAccounts', authenticate ,admin.deleteSomeAccounts)
+router.delete('/someCourses', authenticate ,admin.deleteSomeCourses)
+
+
 
 module.exports = router;

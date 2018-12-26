@@ -12,7 +12,7 @@ const getForm= async ()=> {
 
 const deleteForm= async ()=> {
   try { 
-    result=await knex('courses').select()
+    result=await knex('coursesoflecturers').select()
     if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")
     await knex('reportofstudent').del()
     await knex('surveyform').del()
@@ -24,7 +24,7 @@ const deleteForm= async ()=> {
 
 const createForm= async (data)=> {
   try { 
-    result=await knex('courses').select()
+    result=await knex('coursesoflecturers').select()
     if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")
   	var maxIndex= await knex('surveyform').max('id')
     index=maxIndex[0]["max(`id`)"]
@@ -45,7 +45,7 @@ const createForm= async (data)=> {
 
 const checkUpdateForm= async()=>{
 	try { 
-	  result=await knex('courses').select()
+	  result=await knex('coursesoflecturers').select()
 	  if (result.length == 0) return true 
 	  else return false
   } catch (err) {
@@ -55,7 +55,7 @@ const checkUpdateForm= async()=>{
 
 const deleteCriteria = async function(id){
   try {
-    result=await knex('courses').select()
+    result=await knex('coursesoflecturers').select()
     if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")
     await knex('reportofstudent').where({"criteria_id": id}).del()
     await knex('surveyform').where({"id": id}).del()
@@ -67,7 +67,7 @@ const deleteCriteria = async function(id){
 
 const createCriteria = async function(criteria){
   try {
-    result=await knex('courses').select()
+    result=await knex('coursesoflecturers').select()
     if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")  
     var maxIndex= await knex('surveyform').max('id')
     index=maxIndex[0]["max(`id`)"]
@@ -82,7 +82,7 @@ const createCriteria = async function(criteria){
 
 const editCriteria = async function(id,criteria){
   try {
-    result=await knex('courses').select()
+    result=await knex('coursesoflecturers').select()
     if (result.length != 0) throw new Error("Can't update, please checkUpdateForm ")    
     await knex('surveyform').where("id", id).update("criteria",criteria)
     return ("OK")

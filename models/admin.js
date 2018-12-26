@@ -54,6 +54,7 @@ const deleteAllAccount= async ()=> {
     await knex('lecturers').del()
     await knex('reportofstudent').del()
     await knex('studentsofcourse').del()
+    await knex('courses').del()
     await knex('students').del()
     await knex('users').del().whereNot({role:1})
     return "OK"
@@ -67,30 +68,30 @@ const createListAccounts=async(listAccounts,role)=>{
     usernameDB = await knex('users').select('username').map(function (obj) {return obj.username}) 
     listAccounts.some(obj=>{
       if(!validate.isUsername(obj.username))
-        throw new Error ("Have some invalid username or xlsx is informal")
+        throw new Error ("Have some invalid username or xlsx is informal :" +obj.username)
       else{
         obj.username=standard(obj.username)
-        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("Have some existed username") 
+        if(usernameDB.indexOf(obj.username) >= 0) throw new Error ("Have some existed username :"+obj.username) 
       }
 
       if(!validate.isPassword(obj.password))
-        throw new Error ("Have some invalid password or xlsx is informal")
+        throw new Error ("Have some invalid password or xlsx is informal :"+obj.password)
       else
         obj.password=code.encrypt(""+obj.password)
 
       if(!validate.isFullname(obj.fullname))
-        throw new Error ("Have some invalid fullname or xlsx is informal") 
+        throw new Error ("Have some invalid fullname or xlsx is informal :"+obj.fullname) 
       else
         obj.fullname=standard(obj.fullname)
 
       if(!validate.isVnuEmail(obj.vnuemail))
-        throw new Error ("Have some invalid vnuemail or xlsx is informal") 
+        throw new Error ("Have some invalid vnuemail or xlsx is informal :"+obj.vnuemail) 
       else
         obj.vnuemail=standard(obj.vnuemail)
 
       if(role==3 ){
         if(!validate.isClassname(obj.classname))
-          throw new Error ("Have some invalid classname or xlsx is informal") 
+          throw new Error ("Have some invalid classname or xlsx is informal :"+obj.classname) 
         else
           obj.classname=standard(obj.classname)
       }      
@@ -146,8 +147,12 @@ const createListAccounts=async(listAccounts,role)=>{
 const deleteAccount= async (id)=> {
   try { 
     const result = await knex('users').select('role').where({'id':id})
-    if (result.length == 0) throw new Error("Not found account")
-    if(result[0].role==2){      
+    if (result.length == 0) return "OK"
+    if(result[0].role==2){     
+      find_courses= await knex('lecturersofcourse').where({'id':id}).select('course_id')
+      if (find_courses.length>=0) {
+        for (var i=0;i<find_courses.length;i++) await deleteCourse(find_courses[i].course_id)
+      }
       await knex('lecturersofcourse').del().where({'id':id})
       await knex('lecturers').del().where({'id':id})
       await knex('users').del().where({'id':id})
@@ -158,12 +163,13 @@ const deleteAccount= async (id)=> {
       await knex('students').del().where({'id':id})
       await knex('users').del().where({'id':id})
     }else
-      throw new Error ("Role of list accounts is invalid ")
+      throw new Error ("Role of accounts is invalid ")
     return "OK"
   } catch (err) {
     throw err
   }
 }
+
 
 const createAccount= async (account)=> {
   try { 
@@ -215,7 +221,7 @@ const createAccount= async (account)=> {
 const deleteCourse= async (course_id)=> {
   try { 
     const result = await knex('courses').select().where({course_id:course_id})
-    if (result.length == 0) throw new Error("Not found course")      
+    if (result.length == 0) return "OK"   
     await knex('reportofstudent').where({course_id:course_id}).del()
     await knex('lecturersofcourse').where({course_id:course_id}).del()
     await knex('studentsofcourse').where({course_id:course_id}).del()
@@ -245,7 +251,7 @@ const createCourse= async (listAccounts,data)=> {
     if (result.length != 0) throw new Error("New course_id existed")  
 
     result = await knex('lecturers').select().where({id:data.lecturer_id})
-    if (result.length == 0) throw new Error("lecturer_id didn't exist") 
+    if (result.length == 0) throw new Error("lecturer_id didn't exist :") 
 
     result =await knex('users').select('id','username')
     if (result.length == 0) throw new Error("Not found list account") 
@@ -259,7 +265,7 @@ const createCourse= async (listAccounts,data)=> {
       if(!validate.isUsername(obj.username))
         throw new Error ("Have some invalid username or xlsx is informal")
       else{
-        if(idByUsername[standard(obj.username)]==null) throw new Error ("Student username didn't exist") 
+        if(idByUsername[standard(obj.username)]==null) throw new Error ("Student username didn't exist:"+ obj.username) 
         obj.id= idByUsername[standard(obj.username)]
       }
     })
@@ -347,5 +353,5 @@ module.exports = {
   createCourse,
   deleteCourse,
   deleteAllCourses,
-  updateInfo
+  updateInfo,
 }

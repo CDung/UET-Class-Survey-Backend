@@ -43,6 +43,21 @@ const deleteAccount =async (req,res) =>{
   }
 }
 
+const deleteSomeAccounts =async (req,res) =>{
+  try{
+    const {role}=req.sender
+    list_id=req.body.list_id
+    let result 
+    if (role==1)
+      for(var i=0;i<list_id.length;i++)
+        result= await admin.deleteAccount(list_id[i])
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 const deleteAllAccounts =async (req,res) =>{
   try{
     const {role}=req.sender
@@ -171,6 +186,21 @@ const deleteCourse =async (req,res) =>{
   }
 }
 
+const deleteSomeCourses =async (req,res) =>{
+  try{
+    const {role}=req.sender
+    const list_course_id=req.body.list_course_id
+    let result 
+    if (role==1)
+      for (var i=0;i<list_course_id.length;i++)
+        result= await admin.deleteCourse(list_course_id[i])
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 const deleteAllCourses =async (req,res) =>{
   try{
     const {role}=req.sender
@@ -254,4 +284,6 @@ module.exports = {
   editCriteria,
   createCriteria,
   deleteCriteria ,
+  deleteSomeCourses,
+  deleteSomeAccounts,
 }
