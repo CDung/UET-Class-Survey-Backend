@@ -266,6 +266,18 @@ const deleteCriteria=async (req,res) =>{
   }
 }
 
+const resetForm=async (req,res) =>{
+  try{
+    const {role}=req.sender
+    let result 
+    if (role==1)result= await form.reset()
+    else throw new Error("This role wasn't allowed access")
+    res.send(result)
+  }catch(error){
+    res.status(400).send({message: error.message})
+  }
+}
+
 module.exports = {
   getResultById,
   getAllAccounts,
@@ -286,4 +298,5 @@ module.exports = {
   deleteCriteria ,
   deleteSomeCourses,
   deleteSomeAccounts,
+  resetForm,
 }

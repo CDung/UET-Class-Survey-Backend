@@ -17,6 +17,7 @@ router.post('/account', authenticate ,admin.createAccount)
 router.post('/upList', authenticate,storage.upList,admin.createListAccounts)
 router.post('/course', authenticate,storage.upList,admin.createCourse)
 router.post('/criteria', authenticate ,admin.createCriteria)
+router.post('/resetForm', authenticate ,admin.resetForm)
 
 router.get('/profile', authenticate ,user.getProfile)
 router.get('/courses', authenticate ,user.getCourses)
